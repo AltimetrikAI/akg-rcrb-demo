@@ -1,0 +1,7 @@
+{
+  "name": "hpe-akg-frontend",
+  "version": "1.0.0",
+  "scripts": { "dev": "vite --port 3000", "build": "vite build" },
+  "dependencies": { "vue": "^3.4.0", "vis-network": "^9.1.9", "vis-data": "^7.1.9" },
+  "devDependencies": { "vite": "^5.0.0", "@vitejs/plugin-vue": "^5.0.0" }
+}

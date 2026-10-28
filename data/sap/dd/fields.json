@@ -1,0 +1,38 @@
+[
+  { "tabname": "VBRK", "fieldname": "VBELN",  "position": 1,  "datatype": "CHAR", "leng": 10, "ddtext": "Billing Document", "u_peppol_field": null },
+  { "tabname": "VBRK", "fieldname": "STCEG",  "position": 12, "datatype": "CHAR", "leng": 20, "ddtext": "VAT Registration No.", "u_peppol_field": "BT-031", "u_be_mandatory": true, "u_change_required": false, "u_note": "Seller VAT ID. Populated from company code master. Already present but must be validated as BExxxxxxxxxx format for BE company codes." },
+  { "tabname": "VBRK", "fieldname": "WAERK",  "position": 15, "datatype": "CUKY", "leng": 5,  "ddtext": "SD Document Currency", "u_peppol_field": "BT-5", "u_be_mandatory": true, "u_change_required": false, "u_note": "Invoice currency (ISO 4217). Must be EUR for Belgium. Already set." },
+  { "tabname": "VBRK", "fieldname": "ZFAELL", "position": 22, "datatype": "DATS", "leng": 8,  "ddtext": "Due Date for Net Payment", "u_peppol_field": "BT-9", "u_be_mandatory": true, "u_change_required": true, "u_note": "CHANGE REQUIRED: currently only set for credit memo flows. Must be set for ALL Belgian invoices. Z_HPE_INVOICE_CREATE sets this but validation missing downstream." },
+  { "tabname": "VBRK", "fieldname": "FKART",  "position": 5,  "datatype": "CHAR", "leng": 4,  "ddtext": "Billing Type", "u_peppol_field": null },
+  { "tabname": "VBRK", "fieldname": "BUKRS",  "position": 8,  "datatype": "CHAR", "leng": 4,  "ddtext": "Company Code", "u_peppol_field": null },
+
+  { "tabname": "VBRP", "fieldname": "VBELN",  "position": 1,  "datatype": "CHAR", "leng": 10, "ddtext": "Billing Document", "u_peppol_field": null },
+  { "tabname": "VBRP", "fieldname": "POSNR",  "position": 2,  "datatype": "NUMC", "leng": 6,  "ddtext": "Billing item", "u_peppol_field": null },
+  { "tabname": "VBRP", "fieldname": "MWSKZ",  "position": 14, "datatype": "CHAR", "leng": 2,  "ddtext": "Tax on Sales/Purchases Code", "u_peppol_field": "BG-23-key", "u_be_mandatory": true, "u_change_required": false, "u_note": "Tax code per line item. Grouped to form BG-23 VAT breakdown. Each unique MWSKZ = one BG-23 entry." },
+  { "tabname": "VBRP", "fieldname": "NETWR",  "position": 20, "datatype": "CURR", "leng": 15, "ddtext": "Net Value in Document Currency", "u_peppol_field": "BT-131", "u_be_mandatory": true, "u_change_required": false },
+
+  { "tabname": "KNA1", "fieldname": "KUNNR",  "position": 1,  "datatype": "CHAR", "leng": 10, "ddtext": "Customer Number", "u_peppol_field": null },
+  { "tabname": "KNA1", "fieldname": "NAME1",  "position": 3,  "datatype": "CHAR", "leng": 35, "ddtext": "Name 1", "u_peppol_field": "BT-44", "u_be_mandatory": true },
+  { "tabname": "KNA1", "fieldname": "LAND1",  "position": 7,  "datatype": "CHAR", "leng": 3,  "ddtext": "Country Key", "u_peppol_field": "BT-55", "u_be_mandatory": true },
+  { "tabname": "KNA1", "fieldname": "STCEG",  "position": 29, "datatype": "CHAR", "leng": 20, "ddtext": "VAT Registration No.", "u_peppol_field": "BT-048", "u_be_mandatory": true, "u_change_required": true, "u_note": "CHANGE REQUIRED (HIGH): Buyer VAT ID for BT-048. OPTIONAL today in MDG governance workflow. Must be MANDATORY for LAND1=BE. MDG change request RCRB-BE-2024-001 pending." },
+  { "tabname": "KNA1", "fieldname": "ORT01",  "position": 9,  "datatype": "CHAR", "leng": 35, "ddtext": "City", "u_peppol_field": "BT-52", "u_be_mandatory": true },
+  { "tabname": "KNA1", "fieldname": "PSTLZ",  "position": 10, "datatype": "CHAR", "leng": 10, "ddtext": "Postal Code", "u_peppol_field": "BT-53", "u_be_mandatory": true },
+  { "tabname": "KNA1", "fieldname": "STRAS",  "position": 8,  "datatype": "CHAR", "leng": 35, "ddtext": "Street and House Number", "u_peppol_field": "BT-50", "u_be_mandatory": true },
+
+  { "tabname": "BSEG", "fieldname": "BUKRS",  "position": 1,  "datatype": "CHAR", "leng": 4,  "ddtext": "Company Code", "u_peppol_field": null },
+  { "tabname": "BSEG", "fieldname": "BELNR",  "position": 2,  "datatype": "CHAR", "leng": 10, "ddtext": "Accounting Document Number", "u_peppol_field": null },
+  { "tabname": "BSEG", "fieldname": "MWSKZ",  "position": 22, "datatype": "CHAR", "leng": 2,  "ddtext": "Tax on Sales/Purchases Code", "u_peppol_field": "BG-23-key", "u_note": "Tax code on BSEG tax line. Must match VBRP grouping for BG-23." },
+  { "tabname": "BSEG", "fieldname": "HWBAS",  "position": 34, "datatype": "CURR", "leng": 13, "ddtext": "Tax Base Amount in Local Currency", "u_peppol_field": "BT-116", "u_be_mandatory": true, "u_note": "BT-116: VAT category taxable amount. One value per MWSKZ group." },
+  { "tabname": "BSEG", "fieldname": "HWSTE",  "position": 35, "datatype": "CURR", "leng": 13, "ddtext": "Tax Amount in Local Currency", "u_peppol_field": "BT-117", "u_be_mandatory": true, "u_note": "BT-117: VAT category tax amount." },
+
+  { "tabname": "T007A", "fieldname": "MWSKZ",  "position": 1, "datatype": "CHAR", "leng": 2,  "ddtext": "Tax on Sales/Purchases Code", "u_peppol_field": null },
+  { "tabname": "T007A", "fieldname": "KALSM",  "position": 2, "datatype": "CHAR", "leng": 6,  "ddtext": "Calculation Procedure", "u_peppol_field": null },
+  { "tabname": "T007A", "fieldname": "TEXT1",  "position": 5, "datatype": "CHAR", "leng": 20, "ddtext": "Tax Code Description", "u_peppol_field": null },
+
+  { "tabname": "ZHPE_EINVOICE_AUDIT", "fieldname": "VBELN",      "position": 1, "datatype": "CHAR", "leng": 10, "ddtext": "Billing Document Number", "u_peppol_field": null },
+  { "tabname": "ZHPE_EINVOICE_AUDIT", "fieldname": "COUNTRY",    "position": 2, "datatype": "CHAR", "leng": 3,  "ddtext": "Customer Country", "u_peppol_field": null },
+  { "tabname": "ZHPE_EINVOICE_AUDIT", "fieldname": "CHANNEL",    "position": 3, "datatype": "CHAR", "leng": 20, "ddtext": "Delivery Channel (PEPPOL_AS4, PDF_EMAIL, etc)", "u_peppol_field": null },
+  { "tabname": "ZHPE_EINVOICE_AUDIT", "fieldname": "STATUS",     "position": 4, "datatype": "CHAR", "leng": 10, "ddtext": "Submission Status (SUCCESS/FAILED/PENDING)", "u_peppol_field": null },
+  { "tabname": "ZHPE_EINVOICE_AUDIT", "fieldname": "TRANS_ID",   "position": 5, "datatype": "CHAR", "leng": 50, "ddtext": "Peppol Transmission ID", "u_peppol_field": null },
+  { "tabname": "ZHPE_EINVOICE_AUDIT", "fieldname": "ERDAT",      "position": 6, "datatype": "DATS", "leng": 8,  "ddtext": "Created On", "u_peppol_field": null }
+]

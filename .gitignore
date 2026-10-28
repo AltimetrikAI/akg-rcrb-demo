@@ -1,0 +1,25 @@
+# Environment — never commit real credentials
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+*.egg-info/
+
+# Node
+frontend/node_modules/
+frontend/dist/
+
+# Neo4j runtime
+neo4j/data/
+neo4j/logs/
+neo4j/run/
+neo4j/plugins/
+
+# Claude Code
+.claude/
+
+# macOS
+.DS_Store

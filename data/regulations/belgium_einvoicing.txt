@@ -1,0 +1,129 @@
+BELGIUM MANDATORY B2B E-INVOICING REGULATION
+============================================
+
+REGULATORY SOURCES
+------------------
+1. Royal Decree of 9 March 2022 (Koninklijk Besluit / Arrêté Royal)
+   - Implements mandatory e-invoicing for B2B transactions in Belgium
+   - Legal basis: Article 53decies of the Belgian VAT Code
+
+2. EU Directive 2014/55/EU (European Standard on Electronic Invoicing)
+   - Establishes European standard EN 16931-1
+   - Peppol BIS Billing 3.0 (UBL 2.1) adopted as conformant format
+
+3. Belgian VAT Code (Wetboek BTW / Code TVA), Article 53, 53decies
+
+MANDATE TIMELINE
+----------------
+2024-01-01 : Large enterprises (> 250 employees or > €50M revenue)
+             MUST be capable of RECEIVING structured e-invoices via Peppol
+2025-01-01 : Medium enterprises (50-250 employees) - receive capability mandatory
+2026-01-01 : ALL Belgian registered VAT entities - SENDING mandatory
+             Effective date for HPE EMEA: 2026-01-01
+             HPE company codes in scope: BE10, BE20 (Brussels, Antwerp)
+
+TECHNICAL REQUIREMENTS
+----------------------
+FORMAT:      Peppol BIS Billing 3.0 (UBL 2.1 XML)
+             European standard EN 16931-1 compliant
+             Schema: PEPPOL-EN16931-UBL-validation
+NETWORK:     Peppol AS4 transport protocol
+             Access point required: registered Peppol Service Provider
+             HPE access point: Storecove / HPE Peppol participant ID TBD
+ARCHIVAL:    7 years (Belgian VAT Code Article 60)
+
+MANDATORY PEPPOL BIS 3.0 FIELDS FOR BELGIUM
+--------------------------------------------
+
+BT-031 | Seller VAT Identifier
+  Description : VAT registration number of the seller/supplier
+  Source      : SAP field VBRK-STCEG (Billing Document Header)
+                Also: company code VAT registration (T001-STCEG equivalent)
+  Format      : BExxxxxxxxxx (BE + 10 digits, mod-97 validated)
+  Cardinality : 1..1 (mandatory)
+  Current gap : Field exists in SAP, format validation via Z_HPE_VATCHECK
+                No gap on seller side for BE company codes.
+
+BT-048 | Buyer VAT Identifier
+  Description : VAT registration number of the buyer/customer
+  Source      : SAP field KNA1-STCEG (Customer Master General Data)
+  Format      : BExxxxxxxxxx (BE + 10 digits, mod-97 validated)
+  Cardinality : 1..1 (mandatory for Belgian B2B)
+  Current gap : KNA1-STCEG is OPTIONAL in SAP MDG governance workflow.
+                CHANGE REQUIRED: Must be mandatory for LAND1=BE.
+                MDG change request: RCRB-BE-2024-001
+                Java gap: CustomerVatService logs warning only, does not enforce.
+                Risk: invoices sent without BT-048 will be rejected by Peppol network.
+
+BT-9  | Payment Due Date
+  Description : Date when payment of invoice is due
+  Source      : SAP field VBRK-ZFAELL (custom field, payment due date)
+  Format      : YYYY-MM-DD (ISO 8601)
+  Cardinality : 1..1 (mandatory for Belgium, recommended EN16931)
+  Current gap : Z_HPE_INVOICE_CREATE sets ZFAELL but only for specific billing types.
+                Standard billing type F2 may not populate if payment terms calc fails.
+                CHANGE REQUIRED: Add fallback: if ZFAELL empty, derive from
+                FKDAT (billing date) + payment terms (ZTERM from VBAK).
+
+BG-23 | VAT Breakdown (VAT breakdown by rate)
+  Description : One entry per distinct VAT rate applied on the invoice
+  Sub-fields  : BT-118 (VAT category code), BT-119 (VAT rate),
+                BT-116 (taxable amount), BT-117 (tax amount)
+  Source      : SAP BSEG tax lines grouped by MWSKZ (tax code)
+                Java: TaxDeterminationService.calculateTax() groups by tax code
+  Cardinality : 1..n (at least one VAT breakdown mandatory)
+  Current gap : ABAP Z_HPE_FI_TAXPOST uses AT NEW / AT END OF MWSKZ grouping.
+                Comment in code: "CHANGE REQUIRED" — needs review to confirm
+                all tax codes produce separate BSEG lines.
+                Java TaxDeterminationService groups correctly per code review.
+
+BT-5  | Invoice Currency Code
+  Description : Currency in which invoice amounts are expressed
+  Source      : SAP field VBRK-WAERK (document currency)
+  Format      : ISO 4217 three-letter code (EUR for Belgium)
+  Cardinality : 1..1 (mandatory)
+  Current gap : No gap. Already set. Must be EUR for Belgian transactions.
+
+FORMAT    | Peppol BIS Billing 3.0 (UBL 2.1)
+  Description : Structured XML format per European standard
+  Validation  : PEPPOL-EN16931-UBL schematron rules
+  Produced by : SAP DCP (Document Compliance Platform) via Z_HPE_PEPPOL_OUTPUT RFC
+  Current gap : SAP DCP must be licensed and configured for BE country.
+                Verify with SAP DCP team: Belgium country activation status.
+
+CHANNEL   | Peppol AS4
+  Description : Mandatory network transport for Belgium
+  Current gap : HPE must register as Peppol participant with NANOG-approved SMP.
+                Peppol participant ID registration: PENDING.
+
+PENALTIES AND ENFORCEMENT
+--------------------------
+Non-compliance from 2026-01-01:
+  - Administrative fines: up to 10% of invoice value (Article 70 Belgian VAT Code)
+  - Risk of VAT deduction denial for non-conformant invoices
+  - Audit liability for 7-year archival obligation
+
+IMPACTED HPE SYSTEMS SUMMARY
+------------------------------
+1. SAP S/4HANA EMEA PRD     - Core billing (VBRK, VBRP, BSEG) — HIGH IMPACT
+2. SAP Document Compliance  - Peppol format generation — HIGH IMPACT
+3. SAP MDG                  - Customer master VAT field governance — HIGH IMPACT
+4. HPE Invoice Delivery Svc - Country routing, validation bypass gap — HIGH IMPACT
+5. HPE Customer VAT Service - BT-048 population, validation warning only — HIGH
+6. HPE Tax Determination Svc- BG-23 grouping, read from T007A/TTXD — MEDIUM
+7. Peppol AS4 Access Point  - Participant registration pending — HIGH
+8. Databricks Analytics     - Tax reporting data completeness — MEDIUM
+
+RELATED EUROPEAN MANDATES (CONTEXT)
+-------------------------------------
+Italy    : B2B mandatory since 2019 (Sistema di Interscambio / SDI)
+France   : B2G Chorus Pro mandatory; B2B mandate 2026
+Germany  : E-invoice receive mandatory 2025; transmit 2027 (KoPFMoG)
+Netherlands: Peppol mandatory for public sector
+EU ViDA  : VAT in the Digital Age — real-time digital reporting 2028
+
+REFERENCES
+----------
+Official BE: https://finances.belgium.be/fr/entreprises/tva/facture_electronique
+Peppol:      https://peppol.eu/what-is-peppol/peppol-bis/
+EN16931-1:   CEN/TC 434 European e-invoicing standard

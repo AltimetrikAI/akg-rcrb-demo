@@ -1,0 +1,147 @@
+{
+  "result": [
+    {
+      "sys_id": "rel-001",
+      "type": "Depends on::Used by",
+      "parent": {
+        "value": "ci-005-invoice-delivery-svc",
+        "display_value": "HPE Invoice Delivery Service"
+      },
+      "child": {
+        "value": "ci-001-sap-s4-emea",
+        "display_value": "SAP S/4HANA EMEA PRD"
+      },
+      "u_relation_label": "CALLS"
+    },
+    {
+      "sys_id": "rel-002",
+      "type": "Depends on::Used by",
+      "parent": {
+        "value": "ci-005-invoice-delivery-svc",
+        "display_value": "HPE Invoice Delivery Service"
+      },
+      "child": {
+        "value": "ci-003-peppol-as4",
+        "display_value": "Peppol AS4 Access Point"
+      },
+      "u_relation_label": "CALLS"
+    },
+    {
+      "sys_id": "rel-003",
+      "type": "Depends on::Used by",
+      "parent": {
+        "value": "ci-005-invoice-delivery-svc",
+        "display_value": "HPE Invoice Delivery Service"
+      },
+      "child": {
+        "value": "ci-006-customer-vat-svc",
+        "display_value": "HPE Customer VAT Service"
+      },
+      "u_relation_label": "CALLS"
+    },
+    {
+      "sys_id": "rel-004",
+      "type": "Depends on::Used by",
+      "parent": {
+        "value": "ci-005-invoice-delivery-svc",
+        "display_value": "HPE Invoice Delivery Service"
+      },
+      "child": {
+        "value": "ci-007-tax-determination-svc",
+        "display_value": "HPE Tax Determination Service"
+      },
+      "u_relation_label": "CALLS"
+    },
+    {
+      "sys_id": "rel-005",
+      "type": "Depends on::Used by",
+      "parent": {
+        "value": "ci-006-customer-vat-svc",
+        "display_value": "HPE Customer VAT Service"
+      },
+      "child": {
+        "value": "ci-004-sap-mdg",
+        "display_value": "SAP Master Data Governance"
+      },
+      "u_relation_label": "READS_FROM"
+    },
+    {
+      "sys_id": "rel-006",
+      "type": "Depends on::Used by",
+      "parent": {
+        "value": "ci-007-tax-determination-svc",
+        "display_value": "HPE Tax Determination Service"
+      },
+      "child": {
+        "value": "ci-001-sap-s4-emea",
+        "display_value": "SAP S/4HANA EMEA PRD"
+      },
+      "u_relation_label": "READS_FROM"
+    },
+    {
+      "sys_id": "rel-007",
+      "type": "Downstream of::Upstream of",
+      "parent": {
+        "value": "ci-009-databricks",
+        "display_value": "Databricks Analytics Platform"
+      },
+      "child": {
+        "value": "ci-001-sap-s4-emea",
+        "display_value": "SAP S/4HANA EMEA PRD"
+      },
+      "u_relation_label": "DOWNSTREAM_OF"
+    },
+    {
+      "sys_id": "rel-008",
+      "type": "Depends on::Used by",
+      "parent": {
+        "value": "ci-001-sap-s4-emea",
+        "display_value": "SAP S/4HANA EMEA PRD"
+      },
+      "child": {
+        "value": "ci-002-sap-dcp",
+        "display_value": "SAP Document Compliance Platform"
+      },
+      "u_relation_label": "CALLS"
+    },
+    {
+      "sys_id": "rel-009",
+      "type": "Depends on::Used by",
+      "parent": {
+        "value": "ci-002-sap-dcp",
+        "display_value": "SAP Document Compliance Platform"
+      },
+      "child": {
+        "value": "ci-003-peppol-as4",
+        "display_value": "Peppol AS4 Access Point"
+      },
+      "u_relation_label": "CALLS"
+    },
+    {
+      "sys_id": "rel-010",
+      "type": "Depends on::Used by",
+      "parent": {
+        "value": "ci-008-customer-portal",
+        "display_value": "HPE Customer Portal"
+      },
+      "child": {
+        "value": "ci-001-sap-s4-emea",
+        "display_value": "SAP S/4HANA EMEA PRD"
+      },
+      "u_relation_label": "CALLS"
+    },
+    {
+      "sys_id": "rel-011",
+      "type": "Depends on::Used by",
+      "parent": {
+        "value": "ci-001-sap-s4-emea",
+        "display_value": "SAP S/4HANA EMEA PRD"
+      },
+      "child": {
+        "value": "ci-004-sap-mdg",
+        "display_value": "SAP Master Data Governance"
+      },
+      "u_relation_label": "DEPENDS_ON"
+    }
+  ]
+}

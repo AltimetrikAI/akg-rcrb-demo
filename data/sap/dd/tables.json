@@ -1,0 +1,102 @@
+[
+  {
+    "tabname": "VBRK",
+    "ddtext": "Billing Document: Header Data",
+    "tabclass": "TRANSP",
+    "applclass": "SD",
+    "as4local": "A",
+    "contflag": "C",
+    "u_peppol_relevant": true,
+    "u_regulatory_note": "Contains STCEG (seller VAT/BT-031), WAERK (currency/BT-5), ZFAELL (payment due date/BT-9). All three are Belgium e-invoicing mandatory fields."
+  },
+  {
+    "tabname": "VBRP",
+    "ddtext": "Billing Document: Item Data",
+    "tabclass": "TRANSP",
+    "applclass": "SD",
+    "as4local": "A",
+    "contflag": "C",
+    "u_peppol_relevant": true,
+    "u_regulatory_note": "Contains MWSKZ (tax code) used to group BG-23 VAT breakdown lines. Each distinct MWSKZ = one BG-23 entry."
+  },
+  {
+    "tabname": "KNA1",
+    "ddtext": "General Data in Customer Master",
+    "tabclass": "TRANSP",
+    "applclass": "SD",
+    "as4local": "A",
+    "contflag": "C",
+    "u_peppol_relevant": true,
+    "u_regulatory_note": "STCEG field = Buyer VAT registration number (BT-048). Currently OPTIONAL in MDG workflow. CHANGE REQUIRED: mandatory for LAND1=BE from 2026-01-01."
+  },
+  {
+    "tabname": "BKPF",
+    "ddtext": "Accounting Document Header",
+    "tabclass": "TRANSP",
+    "applclass": "FI",
+    "as4local": "A",
+    "contflag": "C",
+    "u_peppol_relevant": false,
+    "u_regulatory_note": "FI accounting doc header. WAERS currency relevant for BT-5 reconciliation."
+  },
+  {
+    "tabname": "BSEG",
+    "ddtext": "Accounting Document Segment",
+    "tabclass": "CLUSTER",
+    "applclass": "FI",
+    "as4local": "A",
+    "contflag": "C",
+    "u_peppol_relevant": true,
+    "u_regulatory_note": "Tax lines: MWSKZ (tax code), HWBAS (taxable amount/BT-116), HWSTE (tax amount/BT-117). BG-23 requires one BSEG tax line per distinct VAT rate. Current Z_HPE_FI_TAXPOST groups by MWSKZ — CHANGE REQUIRED to verify grouping logic."
+  },
+  {
+    "tabname": "T007A",
+    "ddtext": "Tax Keys",
+    "tabclass": "TRANSP",
+    "applclass": "FI",
+    "as4local": "A",
+    "contflag": "G",
+    "u_peppol_relevant": true,
+    "u_regulatory_note": "Defines tax codes (MWSKZ) and their SAP tax categories. Read by TaxDeterminationService to map Java invoice lines to SAP tax rates."
+  },
+  {
+    "tabname": "TTXD",
+    "ddtext": "Tax Rates",
+    "tabclass": "TRANSP",
+    "applclass": "FI",
+    "as4local": "A",
+    "contflag": "G",
+    "u_peppol_relevant": true,
+    "u_regulatory_note": "Stores percentage rates per tax code and country. Read by TaxDeterminationService for BG-23 rate lookup."
+  },
+  {
+    "tabname": "VBAK",
+    "ddtext": "Sales Document: Header Data",
+    "tabclass": "TRANSP",
+    "applclass": "SD",
+    "as4local": "A",
+    "contflag": "C",
+    "u_peppol_relevant": false,
+    "u_regulatory_note": "Source order data. KUNNR links to KNA1 for VAT lookup upstream in O2C."
+  },
+  {
+    "tabname": "LFA1",
+    "ddtext": "Vendor Master (General Section)",
+    "tabclass": "TRANSP",
+    "applclass": "MM",
+    "as4local": "A",
+    "contflag": "C",
+    "u_peppol_relevant": false,
+    "u_regulatory_note": "Vendor master. STCEG (VAT) required for Belgium inbound e-invoices (AP scope, not O2C — future phase)."
+  },
+  {
+    "tabname": "ZHPE_EINVOICE_AUDIT",
+    "ddtext": "HPE e-Invoice Audit Log (Custom)",
+    "tabclass": "TRANSP",
+    "applclass": "SD",
+    "as4local": "A",
+    "contflag": "X",
+    "u_peppol_relevant": true,
+    "u_regulatory_note": "Custom HPE table. Stores per-invoice Peppol submission status, transmission ID, country, channel. Written by Z_HPE_PEPPOL_OUTPUT. Evidence trail for Belgium regulatory audit."
+  }
+]
